@@ -1,0 +1,1076 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Puja Vyas | Sr. Fashion Designer, Stylist & Business Consultant</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --black: #0a0a0a;
+  --dark: #111111;
+  --card: #1a1a1a;
+  --gold: #c9a84c;
+  --gold-light: #e8d48b;
+  --gold-dim: rgba(201,168,76,0.15);
+  --white: #f5f0eb;
+  --gray: #8a8a8a;
+  --light-gray: #b5b5b5;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--black);
+  color: var(--white);
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
+/* SCROLLBAR */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--black); }
+::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 3px; }
+
+/* LOADER */
+.loader {
+  position: fixed; inset: 0; z-index: 9999;
+  background: var(--black);
+  display: flex; align-items: center; justify-content: center;
+  transition: opacity 0.8s ease, visibility 0.8s ease;
+}
+.loader.hidden { opacity: 0; visibility: hidden; }
+.loader-text {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 5vw, 4rem);
+  font-weight: 900;
+  letter-spacing: 0.3em;
+  color: var(--gold);
+  animation: pulse 1.5s ease-in-out infinite;
+}
+@keyframes pulse { 0%,100% { opacity: 0.3; } 50% { opacity: 1; } }
+
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  padding: 1.5rem 4rem;
+  display: flex; justify-content: space-between; align-items: center;
+  background: linear-gradient(180deg, rgba(10,10,10,0.95) 0%, transparent 100%);
+  transition: background 0.4s;
+}
+nav.scrolled { background: rgba(10,10,10,0.97); backdrop-filter: blur(20px); }
+.nav-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.4rem; font-weight: 700;
+  color: var(--gold); letter-spacing: 0.15em;
+  text-decoration: none;
+}
+.nav-links { display: flex; gap: 2.5rem; list-style: none; }
+.nav-links a {
+  color: var(--light-gray); text-decoration: none;
+  font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase;
+  font-weight: 500; transition: color 0.3s;
+  position: relative;
+}
+.nav-links a::after {
+  content: ''; position: absolute; bottom: -4px; left: 0;
+  width: 0; height: 1px; background: var(--gold);
+  transition: width 0.3s;
+}
+.nav-links a:hover { color: var(--gold); }
+.nav-links a:hover::after { width: 100%; }
+
+.hamburger { display: none; cursor: pointer; flex-direction: column; gap: 5px; }
+.hamburger span { width: 25px; height: 1.5px; background: var(--gold); transition: 0.3s; }
+
+/* HERO */
+.hero {
+  height: 100vh; position: relative;
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+}
+.hero-bg {
+  position: absolute; inset: 0;
+  background: var(--black);
+}
+
+.hero-content {
+  position: relative; z-index: 2; text-align: center;
+  padding: 2rem;
+}
+.hero-label {
+  font-size: 0.75rem; letter-spacing: 0.5em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 1.5rem;
+  opacity: 0; animation: fadeUp 1s 0.8s forwards;
+}
+.hero-name {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(3rem, 8vw, 7rem);
+  font-weight: 900; letter-spacing: 0.08em;
+  line-height: 1.05; margin-bottom: 1rem;
+  opacity: 0; animation: fadeUp 1s 1s forwards;
+}
+.hero-name span { color: var(--gold); }
+.hero-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1rem, 2.5vw, 1.6rem);
+  font-weight: 300; font-style: italic;
+  color: var(--light-gray); letter-spacing: 0.1em;
+  opacity: 0; animation: fadeUp 1s 1.2s forwards;
+}
+.hero-cta {
+  margin-top: 3rem;
+  opacity: 0; animation: fadeUp 1s 1.5s forwards;
+}
+.hero-cta a {
+  display: inline-block; padding: 1rem 3rem;
+  border: 1px solid var(--gold); color: var(--gold);
+  text-decoration: none; font-size: 0.75rem;
+  letter-spacing: 0.3em; text-transform: uppercase;
+  transition: all 0.4s;
+}
+.hero-cta a:hover { background: var(--gold); color: var(--black); }
+
+.scroll-indicator {
+  position: absolute; bottom: 2rem; left: 50%;
+  transform: translateX(-50%);
+  opacity: 0; animation: fadeUp 1s 2s forwards;
+}
+.scroll-indicator span {
+  display: block; width: 1px; height: 60px;
+  background: linear-gradient(to bottom, var(--gold), transparent);
+  animation: scrollLine 2s ease-in-out infinite;
+}
+@keyframes scrollLine { 0% { transform: scaleY(0); transform-origin: top; } 50% { transform: scaleY(1); transform-origin: top; } 51% { transform-origin: bottom; } 100% { transform: scaleY(0); transform-origin: bottom; } }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+
+/* SECTIONS */
+section { padding: 8rem 4rem; }
+
+.section-label {
+  font-size: 0.7rem; letter-spacing: 0.5em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 0.8rem;
+}
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-weight: 700; margin-bottom: 1.5rem;
+  line-height: 1.2;
+}
+.section-line {
+  width: 60px; height: 1px; background: var(--gold);
+  margin-bottom: 3rem;
+}
+
+/* ABOUT */
+.about { background: var(--dark); }
+.about-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 6rem; align-items: center; max-width: 1200px; margin: 0 auto;
+}
+.about-image {
+  position: relative; aspect-ratio: 3/4; overflow: hidden;
+}
+.about-image img {
+  width: 100%; height: 100%; object-fit: cover;
+  filter: grayscale(30%);
+  transition: filter 0.5s;
+}
+.about-image:hover img { filter: grayscale(0%); }
+.about-image::after {
+  content: ''; position: absolute;
+  top: 1rem; left: 1rem; right: -1rem; bottom: -1rem;
+  border: 1px solid var(--gold); z-index: -1;
+}
+.about-text p {
+  font-size: 1rem; color: var(--light-gray);
+  margin-bottom: 1.5rem; line-height: 1.8;
+  font-weight: 300;
+}
+.about-stats {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 2rem; margin-top: 3rem;
+  padding-top: 2rem; border-top: 1px solid rgba(201,168,76,0.2);
+}
+.stat-number {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.5rem; font-weight: 700;
+  color: var(--gold);
+}
+.stat-label {
+  font-size: 0.7rem; letter-spacing: 0.15em;
+  text-transform: uppercase; color: var(--gray);
+  margin-top: 0.3rem;
+}
+
+/* PORTFOLIO */
+.portfolio { background: var(--black); }
+.portfolio-filter {
+  display: flex; gap: 1.5rem; margin-bottom: 3rem; flex-wrap: wrap;
+}
+.filter-btn {
+  background: none; border: 1px solid rgba(201,168,76,0.3);
+  color: var(--gray); padding: 0.6rem 1.8rem;
+  font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase;
+  cursor: pointer; transition: all 0.3s;
+  font-family: 'Inter', sans-serif;
+}
+.filter-btn:hover, .filter-btn.active {
+  background: var(--gold); color: var(--black);
+  border-color: var(--gold);
+}
+.portfolio-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+.portfolio-item {
+  position: relative; overflow: hidden;
+  aspect-ratio: 1; cursor: pointer;
+}
+.portfolio-item img, .portfolio-item video {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform 0.6s ease, filter 0.4s;
+  filter: grayscale(20%);
+}
+.portfolio-item:hover img, .portfolio-item:hover video { transform: scale(1.08); filter: grayscale(0%); }
+.portfolio-video iframe {
+  width: 100%; height: 100%; border: none;
+  pointer-events: auto;
+}
+.portfolio-video .video-overlay {
+  pointer-events: none;
+}
+.portfolio-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(10,10,10,0.9) 0%, transparent 60%);
+  display: flex; flex-direction: column;
+  justify-content: flex-end; padding: 1.5rem;
+  opacity: 0; transition: opacity 0.4s;
+}
+.portfolio-item:hover .portfolio-overlay { opacity: 1; }
+.portfolio-overlay h4 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem; color: var(--white);
+}
+.portfolio-overlay span {
+  font-size: 0.7rem; color: var(--gold);
+  letter-spacing: 0.15em; text-transform: uppercase;
+  margin-top: 0.3rem;
+}
+
+/* EXPERIENCE TIMELINE */
+.experience { background: var(--dark); }
+.timeline { max-width: 900px; margin: 0 auto; position: relative; }
+.timeline::before {
+  content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+  width: 1px; background: linear-gradient(to bottom, var(--gold), transparent);
+}
+.timeline-item {
+  padding-left: 3rem; margin-bottom: 3rem;
+  position: relative;
+  opacity: 0; transform: translateX(-20px);
+  animation: slideIn 0.6s forwards;
+}
+.timeline-item:nth-child(1) { animation-delay: 0.1s; }
+.timeline-item:nth-child(2) { animation-delay: 0.2s; }
+.timeline-item:nth-child(3) { animation-delay: 0.3s; }
+.timeline-item:nth-child(4) { animation-delay: 0.4s; }
+.timeline-item:nth-child(5) { animation-delay: 0.5s; }
+.timeline-item:nth-child(6) { animation-delay: 0.6s; }
+.timeline-item:nth-child(7) { animation-delay: 0.7s; }
+@keyframes slideIn { to { opacity: 1; transform: translateX(0); } }
+
+.timeline-dot {
+  position: absolute; left: -4px; top: 6px;
+  width: 9px; height: 9px; background: var(--gold);
+  border-radius: 50%;
+}
+.timeline-date {
+  font-size: 0.7rem; letter-spacing: 0.2em;
+  color: var(--gold); text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+.timeline-company {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem; font-weight: 700;
+  margin-bottom: 0.2rem;
+}
+.timeline-role {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic; font-size: 1rem;
+  color: var(--gold-light); margin-bottom: 0.8rem;
+}
+.timeline-bullets { list-style: none; }
+.timeline-bullets li {
+  font-size: 0.85rem; color: var(--light-gray);
+  font-weight: 300; padding-left: 1rem;
+  margin-bottom: 0.4rem; position: relative;
+}
+.timeline-bullets li::before {
+  content: ''; position: absolute; left: 0; top: 0.55em;
+  width: 4px; height: 4px; background: var(--gold);
+  border-radius: 50%;
+}
+
+/* SKILLS */
+.skills { background: var(--black); }
+.skills-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 2rem; max-width: 1100px; margin: 0 auto;
+}
+.skill-card {
+  background: var(--card); border: 1px solid rgba(201,168,76,0.1);
+  padding: 2.5rem 2rem; text-align: center;
+  transition: all 0.4s;
+}
+.skill-card:hover {
+  border-color: var(--gold);
+  transform: translateY(-5px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+}
+.skill-icon {
+  font-size: 1.8rem; margin-bottom: 1.2rem;
+  color: var(--gold);
+}
+.skill-card h4 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem; margin-bottom: 1rem;
+  letter-spacing: 0.05em;
+}
+.skill-card p {
+  font-size: 0.8rem; color: var(--gray);
+  line-height: 1.7; font-weight: 300;
+}
+
+/* HIGHLIGHTS */
+.highlights { background: var(--dark); }
+.highlights-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 2rem; max-width: 1000px; margin: 0 auto;
+}
+.highlight-card {
+  text-align: center; padding: 3rem 2rem;
+  border: 1px solid rgba(201,168,76,0.08);
+  transition: border-color 0.4s;
+}
+.highlight-card:hover { border-color: var(--gold); }
+.highlight-icon { font-size: 2rem; margin-bottom: 1rem; }
+.highlight-card h4 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem; margin-bottom: 0.5rem;
+}
+.highlight-card p {
+  font-size: 0.8rem; color: var(--gray);
+  font-weight: 300; line-height: 1.6;
+}
+
+/* CONTACT */
+.contact {
+  background: var(--black); text-align: center;
+  padding: 10rem 4rem;
+}
+.contact-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 700; margin-bottom: 1.5rem;
+}
+.contact-subtitle {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.2rem; font-style: italic;
+  color: var(--gray); margin-bottom: 3rem;
+  max-width: 500px; margin-left: auto; margin-right: auto;
+}
+.contact-details {
+  display: flex; justify-content: center;
+  gap: 4rem; margin-bottom: 3rem; flex-wrap: wrap;
+}
+.contact-item { text-align: center; }
+.contact-item label {
+  display: block; font-size: 0.65rem;
+  letter-spacing: 0.3em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 0.5rem;
+}
+.contact-item a, .contact-item span {
+  color: var(--white); text-decoration: none;
+  font-size: 0.95rem; font-weight: 300;
+  transition: color 0.3s;
+}
+.contact-item a:hover { color: var(--gold); }
+/* FOOTER */
+footer {
+  text-align: center; padding: 2rem;
+  border-top: 1px solid rgba(201,168,76,0.1);
+  font-size: 0.7rem; color: var(--gray);
+  letter-spacing: 0.1em;
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  section { padding: 5rem 2rem; }
+  nav { padding: 1rem 2rem; }
+  .nav-links { display: none; }
+  .hamburger { display: flex; }
+  .nav-links.open {
+    display: flex; flex-direction: column;
+    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(10,10,10,0.98);
+    justify-content: center; align-items: center;
+    gap: 2rem; z-index: 99;
+  }
+  .nav-links.open a { font-size: 1.2rem; }
+  .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+  .skills-grid { grid-template-columns: repeat(2, 1fr); }
+  .highlights-grid { grid-template-columns: 1fr; }
+  .contact-details { flex-direction: column; gap: 2rem; }
+  .about-stats { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 600px) {
+  .skills-grid { grid-template-columns: 1fr; }
+  .portfolio-grid { grid-template-columns: repeat(2, 1fr); gap: 0.5rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- LOADER -->
+<div class="loader"><div class="loader-text">PV</div></div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">PUJA VYAS</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#portfolio">Portfolio</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#skills">Expertise</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="hamburger" onclick="document.querySelector('.nav-links').classList.toggle('open')">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <p class="hero-label">Fashion Designer / Stylist / Entrepreneur</p>
+    <h1 class="hero-name">PUJA <span>VYAS</span></h1>
+    <p class="hero-title">Sr. Fashion Designer, Stylist & Business Consultant</p>
+    <div class="hero-cta">
+      <a href="#portfolio">View Portfolio</a>
+    </div>
+  </div>
+  <div class="scroll-indicator"><span></span></div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-grid">
+    <div class="about-image" style="background:#f5f0e8; display:flex; align-items:center; justify-content:center;">
+      <svg viewBox="0 0 400 530" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;padding:2rem;">
+        <!-- Textured background -->
+        <defs>
+          <filter id="paper"><feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="5" result="noise"/><feDiffuseLighting in="noise" lighting-color="#f5f0e8" surfaceScale="1.5"><feDistantLight azimuth="45" elevation="55"/></feDiffuseLighting></filter>
+          <linearGradient id="gown1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2a3a5c"/><stop offset="60%" stop-color="#4a6a9c"/><stop offset="100%" stop-color="#d4c5a8"/></linearGradient>
+          <linearGradient id="gown2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#c9a84c"/><stop offset="40%" stop-color="#d4b86a"/><stop offset="100%" stop-color="#f5e6c8"/></linearGradient>
+          <linearGradient id="skin" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#e8cdb5"/><stop offset="100%" stop-color="#d4b89a"/></linearGradient>
+        </defs>
+        <rect width="400" height="530" fill="#f5f0e8" filter="url(#paper)" opacity="0.3"/>
+
+        <!-- Figure 1 - Draped evening gown (left) -->
+        <g transform="translate(100,20)" opacity="0.9">
+          <!-- Head -->
+          <ellipse cx="0" cy="28" rx="12" ry="15" fill="url(#skin)" stroke="#2a3a5c" stroke-width="0.8"/>
+          <!-- Hair -->
+          <path d="M-12,22 Q-14,10 -5,5 Q0,2 8,5 Q15,10 13,22" fill="#1a1a2e" stroke="#0a0a1e" stroke-width="0.5"/>
+          <!-- Neck -->
+          <line x1="0" y1="43" x2="0" y2="58" stroke="url(#skin)" stroke-width="6"/>
+          <!-- Shoulders -->
+          <path d="M-25,62 Q-10,55 0,58 Q10,55 25,62" fill="none" stroke="url(#skin)" stroke-width="3"/>
+          <!-- Bodice - draped -->
+          <path d="M-25,62 Q-28,70 -22,85 Q-15,100 -12,120 L12,120 Q15,100 22,85 Q28,70 25,62 Q15,68 0,65 Q-15,68 -25,62Z" fill="url(#gown1)" stroke="#1a2a4c" stroke-width="0.8"/>
+          <!-- Drape detail -->
+          <path d="M-20,65 Q-5,80 -10,100" fill="none" stroke="#1a2a4c" stroke-width="0.6" opacity="0.6"/>
+          <path d="M-15,68 Q0,85 -5,105" fill="none" stroke="#1a2a4c" stroke-width="0.6" opacity="0.5"/>
+          <path d="M15,65 Q5,78 8,95" fill="none" stroke="#1a2a4c" stroke-width="0.6" opacity="0.5"/>
+          <!-- Waist -->
+          <path d="M-12,120 Q0,118 12,120" fill="none" stroke="#1a2a4c" stroke-width="0.8"/>
+          <!-- Skirt - flowing -->
+          <path d="M-12,120 Q-30,200 -55,350 Q-60,380 -70,420 L70,420 Q60,380 55,350 Q30,200 12,120Z" fill="url(#gown1)" stroke="#1a2a4c" stroke-width="0.8"/>
+          <!-- Skirt flow lines -->
+          <path d="M-8,125 Q-20,220 -40,350" fill="none" stroke="#1a2a4c" stroke-width="0.5" opacity="0.4"/>
+          <path d="M0,120 Q-8,250 -20,380" fill="none" stroke="#1a2a4c" stroke-width="0.5" opacity="0.3"/>
+          <path d="M8,125 Q15,250 10,380" fill="none" stroke="#1a2a4c" stroke-width="0.5" opacity="0.3"/>
+          <!-- Train -->
+          <path d="M55,350 Q70,380 90,430 Q60,440 -70,420" fill="url(#gown1)" stroke="#1a2a4c" stroke-width="0.6" opacity="0.7"/>
+          <!-- Arms -->
+          <path d="M-25,62 Q-35,80 -30,110" fill="none" stroke="url(#skin)" stroke-width="2.5" stroke-linecap="round"/>
+          <path d="M25,62 Q32,80 28,105" fill="none" stroke="url(#skin)" stroke-width="2.5" stroke-linecap="round"/>
+        </g>
+
+        <!-- Figure 2 - Gold structured gown (right) -->
+        <g transform="translate(290,25)" opacity="0.9">
+          <!-- Head -->
+          <ellipse cx="0" cy="25" rx="11" ry="14" fill="url(#skin)" stroke="#8a6a2c" stroke-width="0.8"/>
+          <!-- Hair - updo -->
+          <path d="M-11,18 Q-12,6 -3,2 Q3,0 8,4 Q12,8 11,18" fill="#1a1a2e" stroke="#0a0a1e" stroke-width="0.5"/>
+          <circle cx="2" cy="2" r="5" fill="#1a1a2e"/>
+          <!-- Neck -->
+          <line x1="0" y1="39" x2="0" y2="54" stroke="url(#skin)" stroke-width="5.5"/>
+          <!-- Shoulders -->
+          <path d="M-22,58 Q-8,52 0,54 Q8,52 22,58" fill="none" stroke="url(#skin)" stroke-width="2.5"/>
+          <!-- Bodice - structured/gold -->
+          <path d="M-18,58 Q-20,70 -16,85 Q-12,95 -10,110 L10,110 Q12,95 16,85 Q20,70 18,58 Q8,62 0,60 Q-8,62 -18,58Z" fill="url(#gown2)" stroke="#8a6a2c" stroke-width="0.8"/>
+          <!-- Lattice detail on bodice -->
+          <path d="M-14,62 L6,90" fill="none" stroke="#8a6a2c" stroke-width="0.5" opacity="0.6"/>
+          <path d="M-8,60 L10,85" fill="none" stroke="#8a6a2c" stroke-width="0.5" opacity="0.5"/>
+          <path d="M14,62 L-6,90" fill="none" stroke="#8a6a2c" stroke-width="0.5" opacity="0.6"/>
+          <path d="M8,60 L-10,85" fill="none" stroke="#8a6a2c" stroke-width="0.5" opacity="0.5"/>
+          <!-- Waist sash -->
+          <path d="M-10,110 Q0,107 10,110" fill="none" stroke="#8a6a2c" stroke-width="1"/>
+          <!-- Skirt - flowing with train -->
+          <path d="M-10,110 Q-25,200 -40,320 Q-45,360 -50,400 L50,400 Q45,360 40,320 Q25,200 10,110Z" fill="url(#gown2)" stroke="#8a6a2c" stroke-width="0.8"/>
+          <!-- Skirt flow lines -->
+          <path d="M-5,115 Q-15,220 -28,350" fill="none" stroke="#8a6a2c" stroke-width="0.5" opacity="0.4"/>
+          <path d="M5,115 Q10,250 5,380" fill="none" stroke="#8a6a2c" stroke-width="0.5" opacity="0.3"/>
+          <!-- Train extension -->
+          <path d="M40,320 Q55,360 75,410 Q45,415 -50,400" fill="url(#gown2)" stroke="#8a6a2c" stroke-width="0.6" opacity="0.6"/>
+          <!-- Lace/sheer overlay on back -->
+          <path d="M10,110 Q18,140 20,180 Q22,220 25,260" fill="none" stroke="#2a3a5c" stroke-width="0.8" opacity="0.4" stroke-dasharray="3,2"/>
+          <!-- Arms -->
+          <path d="M-22,58 Q-30,75 -25,100" fill="none" stroke="url(#skin)" stroke-width="2.2" stroke-linecap="round"/>
+          <path d="M22,58 Q28,78 24,100" fill="none" stroke="url(#skin)" stroke-width="2.2" stroke-linecap="round"/>
+        </g>
+
+        <!-- Signature -->
+        <text x="180" y="480" font-family="Cormorant Garamond, serif" font-size="14" fill="#c9a84c" font-style="italic" text-anchor="middle" letter-spacing="0.15em">Puja Vyas</text>
+        <line x1="130" y1="488" x2="230" y2="488" stroke="#c9a84c" stroke-width="0.5" opacity="0.5"/>
+        <text x="180" y="505" font-family="Inter, sans-serif" font-size="7" fill="#8a8a8a" text-anchor="middle" letter-spacing="0.3em" text-transform="uppercase">ORIGINAL ILLUSTRATIONS</text>
+      </svg>
+    </div>
+    <div class="about-text">
+      <p class="section-label">About</p>
+      <h2 class="section-title">Crafting Elegance,<br>Defining Style</h2>
+      <div class="section-line"></div>
+      <p>Accomplished Fashion Professional with over 12 years of comprehensive experience spanning luxury retail, high-couture design, celebrity styling, and D2C brand building.</p>
+      <p>Expert in managing end-to-end design lifecycles, visual merchandising, and high-net-worth client relationships. Proven track record of enhancing brand value through strategic marketing, high-profile industry collaborations, and entrepreneurial ventures.</p>
+      <p>From co-founding BlamBlack to representing brands at Paris Fashion Week, and styling celebrities like Chitrangada Singh, every project reflects a dedication to detail, luxury, and timeless design.</p>
+      <div class="about-stats">
+        <div>
+          <div class="stat-number">12+</div>
+          <div class="stat-label">Years Experience</div>
+        </div>
+        <div>
+          <div class="stat-number">3K+</div>
+          <div class="stat-label">Clients Served</div>
+        </div>
+        <div>
+          <div class="stat-number">6+</div>
+          <div class="stat-label">Brands Built</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PORTFOLIO -->
+<section class="portfolio" id="portfolio">
+  <p class="section-label">Portfolio</p>
+  <h2 class="section-title">Selected Work</h2>
+  <div class="section-line"></div>
+  <div class="portfolio-filter">
+    <button class="filter-btn active" onclick="filterPortfolio('all', this)">All</button>
+    <button class="filter-btn" onclick="filterPortfolio('blamblack', this)">BlamBlack</button>
+    <button class="filter-btn" onclick="filterPortfolio('rare', this)">Rare Heritage</button>
+    <button class="filter-btn" onclick="filterPortfolio('bailgaadi', this)">Bailgaadi</button>
+    <button class="filter-btn" onclick="filterPortfolio('vaishaali', this)">Vaishali's</button>
+  </div>
+  <div class="portfolio-grid">
+    <!-- BlamBlack (8 images) -->
+    <div class="portfolio-item" data-brand="blamblack">
+      <img loading="lazy" src="https://lh3.googleusercontent.com/d/1AI203wrIncElQhTEC0ijwcRd-sZsPkuC" alt="BlamBlack Tie-Dye Hoodies">
+      <div class="portfolio-overlay"><h4>Tie-Dye Hoodie Collection</h4><span>BlamBlack - Couple Streetwear</span></div>
+    </div>
+    <div class="portfolio-item" data-brand="blamblack">
+      <img loading="lazy" src="https://lh3.googleusercontent.com/d/1L_GDGeyET-OrhcAlZDv6_WJxLSAvof5Y" alt="BlamBlack Branded Editorial">
+      <div class="portfolio-overlay"><h4>BlamBlack Branded Editorial</h4><span>BlamBlack - Motion Blur Campaign</span></div>
+    </div>
+    <div class="portfolio-item" data-brand="blamblack">
+      <img loading="lazy" src="https://lh3.googleusercontent.com/d/1OxBPmy1r6CZD4lhvU46Fn0I16ZCI0xHs" alt="BlamBlack Essentials Tee">
+      <div class="portfolio-overlay"><h4>BlamBlack Essentials</h4><span>BlamBlack - Teal Graphic Tee</span></div>
+    </div>
+    <div class="portfolio-item" data-brand="blamblack">
+      <img loading="lazy" src="https://lh3.googleusercontent.com/d/1MQOZXVVhhTCSizsWk7BnQClzHjjvHRCY" alt="BlamBlack Color-Block Set">
+      <div class="portfolio-overlay"><h4>BB Color-Block Set</h4><span>BlamBlack - Skate Culture Editorial</span></div>
+    </div>
+    <div class="portfolio-item" data-brand="blamblack">
+      <img loading="lazy" src="https://lh3.googleusercontent.com/d/16lj6ND-6byaBnMYxkdBGoQjNGEk-5gXD" alt="BlamBlack Royal Blue Co-ord">
+      <div class="portfolio-overlay"><h4>Royal Blue Contrast-Stitch</h4><span>BlamBlack - Summer Shorts Set</span></div>
+    </div>
+    <div class="portfolio-item" data-brand="blamblack">
+      <img loading="lazy" src="https://lh3.googleusercontent.com/d/1qUV8Cx-bRjXXb-PGyVfAULxZY-4aMLm6" alt="BlamBlack Urban Street">
+      <div class="portfolio-overlay"><h4>Contrast Stitch Shorts Set</h4><span>BlamBlack - Urban Street</span></div>
+    </div>
+    <div class="portfolio-item" data-brand="blamblack">
+      <img loading="lazy" src="https://lh3.googleusercontent.com/d/1nsY52WaGmj9kRGYp81nHo78YNyUcIlf_" alt="BlamBlack Gray Tracksuit">
+      <div class="portfolio-overlay"><h4>Gray Tracksuit Set</h4><span>BlamBlack - Minimal Athleisure</span></div>
+    </div>
+    <div class="portfolio-item" data-brand="blamblack">
+      <img loading="lazy" src="https://lh3.googleusercontent.com/d/101JEAyfsqur7ZEwrgc1NiAJED6nqEWHf" alt="BlamBlack Black Sweatshirt">
+      <div class="portfolio-overlay"><h4>Black Sweatshirt Editorial</h4><span>BlamBlack - Studio Shoot</span></div>
+    </div>
+    <div class="portfolio-item" data-brand="blamblack">
+      <img loading="lazy" src="https://lh3.googleusercontent.com/d/1CR-KxIepgmxDr8_hkCO4F1kR_qPMbeQ4" alt="BlamBlack Collection">
+      <div class="portfolio-overlay"><h4>Streetwear Edit</h4><span>BlamBlack</span></div>
+    </div>
+    <div class="portfolio-item" data-brand="blamblack">
+      <img loading="lazy" src="https://lh3.googleusercontent.com/d/1AXneSzwCDPMbs8jp0ovTgSgdpdBFFTnj" alt="BlamBlack Design">
+      <div class="portfolio-overlay"><h4>Graphic Series</h4><span>BlamBlack</span></div>
+    </div>
+    <div class="portfolio-item" data-brand="blamblack">
+      <img loading="lazy" src="https://lh3.googleusercontent.com/d/1ZnhoOWGx1cYiOkWKIRDvPF6evoL9HOWx" alt="BlamBlack Look">
+      <div class="portfolio-overlay"><h4>Casual Lookbook</h4><span>BlamBlack</span></div>
+    </div>
+    <div class="portfolio-item" data-brand="blamblack">
+      <img loading="lazy" src="https://lh3.googleusercontent.com/d/1c1E3hn0wapagPrKy0MVMDHyVHy7ltm1P" alt="BlamBlack Style">
+      <div class="portfolio-overlay"><h4>Summer Drop</h4><span>BlamBlack</span></div>
+    </div>
+    <div class="portfolio-item" data-brand="blamblack">
+      <img loading="lazy" src="https://lh3.googleusercontent.com/d/16HctFVWAZauwo0cpV7xv9wCOUQp4iBjU" alt="BlamBlack Piece">
+      <div class="portfolio-overlay"><h4>Essentials Range</h4><span>BlamBlack</span></div>
+    </div>
+    <div class="portfolio-item" data-brand="blamblack">
+      <img loading="lazy" src="https://lh3.googleusercontent.com/d/1JbRWdr1wcvfMyDTvvO3Ul49OiwMHN0I9" alt="BlamBlack Campaign">
+      <div class="portfolio-overlay"><h4>Campaign Shoot</h4><span>BlamBlack</span></div>
+    </div>
+    <div class="portfolio-item" data-brand="blamblack">
+      <img loading="lazy" src="https://lh3.googleusercontent.com/d/1J5UdCCRLUhuq8jZsyzaZ_iu5jGBxQEif" alt="BlamBlack Outfit">
+      <div class="portfolio-overlay"><h4>Co-ord Set</h4><span>BlamBlack</span></div>
+    </div>
+    <div class="portfolio-item" data-brand="blamblack">
+      <img loading="lazy" src="https://lh3.googleusercontent.com/d/1ixeaJWm4Ad0Fg40-XDwWZMwwopRfAOj_" alt="BlamBlack Fashion">
+      <div class="portfolio-overlay"><h4>Oversized Collection</h4><span>BlamBlack</span></div>
+    </div>
+    <div class="portfolio-item" data-brand="blamblack">
+      <img loading="lazy" src="https://lh3.googleusercontent.com/d/1bGNr4s4j66qsTOWodX-JGOLOFjXoBqed" alt="BlamBlack Wear">
+      <div class="portfolio-overlay"><h4>Athleisure Drop</h4><span>BlamBlack</span></div>
+    </div>
+    <div class="portfolio-item" data-brand="blamblack">
+      <img loading="lazy" src="https://lh3.googleusercontent.com/d/1YYA2W5oEkuj_bx1biexjyi1KH07gFeEy" alt="BlamBlack Set">
+      <div class="portfolio-overlay"><h4>Monochrome Edit</h4><span>BlamBlack</span></div>
+    </div>
+    <div class="portfolio-item" data-brand="blamblack">
+      <img loading="lazy" src="https://lh3.googleusercontent.com/d/1BVE2tRxOrYgXChr9j0MYEYVG9q56yD-z" alt="BlamBlack Drop">
+      <div class="portfolio-overlay"><h4>Winter Collection</h4><span>BlamBlack</span></div>
+    </div>
+    <div class="portfolio-item" data-brand="blamblack">
+      <img loading="lazy" src="https://lh3.googleusercontent.com/d/1brAxSHHbC2dZ1qMVlBWKi-yBj9_FHEQC" alt="BlamBlack Editorial">
+      <div class="portfolio-overlay"><h4>Editorial Series</h4><span>BlamBlack</span></div>
+    </div>
+    <div class="portfolio-item" data-brand="blamblack">
+      <img loading="lazy" src="https://lh3.googleusercontent.com/d/1mn33acx80R-nyBLexeUTkejGegQtnS8o" alt="BlamBlack Shoot">
+      <div class="portfolio-overlay"><h4>Outdoor Shoot</h4><span>BlamBlack</span></div>
+    </div>
+    <div class="portfolio-item" data-brand="blamblack">
+      <img loading="lazy" src="https://lh3.googleusercontent.com/d/1590BSCqT2OSwGiSBZJ3zdutco65s0lJC" alt="BlamBlack Range">
+      <div class="portfolio-overlay"><h4>Seasonal Range</h4><span>BlamBlack</span></div>
+    </div>
+    <div class="portfolio-item" data-brand="blamblack">
+      <img loading="lazy" src="https://lh3.googleusercontent.com/d/17G7PDax7Pdy9HMmR54IWZBU-supRDZ18" alt="BlamBlack Studio">
+      <div class="portfolio-overlay"><h4>Studio Session</h4><span>BlamBlack</span></div>
+    </div>
+    <div class="portfolio-item" data-brand="blamblack">
+      <img loading="lazy" src="https://lh3.googleusercontent.com/d/1bzqjubi_rdoXJ3N9la05qXauDkFF0IiX" alt="BlamBlack Capsule">
+      <div class="portfolio-overlay"><h4>Capsule Collection</h4><span>BlamBlack</span></div>
+    </div>
+    <div class="portfolio-item" data-brand="blamblack">
+      <img loading="lazy" src="https://lh3.googleusercontent.com/d/1hk_9XfY4ujx9m8Sfqv_lQ4ym5UKUvrCg" alt="BlamBlack Apparel">
+      <div class="portfolio-overlay"><h4>Premium Apparel</h4><span>BlamBlack</span></div>
+    </div>
+    <div class="portfolio-item" data-brand="blamblack">
+      <img loading="lazy" src="https://lh3.googleusercontent.com/d/1GeKT7eumNkWnpo_RDLXsbAaJnBobGvkm" alt="BlamBlack Feature">
+      <div class="portfolio-overlay"><h4>Feature Piece</h4><span>BlamBlack</span></div>
+    </div>
+    <div class="portfolio-item" data-brand="blamblack">
+      <img loading="lazy" src="https://lh3.googleusercontent.com/d/105Td5XhIY6kqxqX5aTgyOh0dPFbZKezp" alt="BlamBlack Collab">
+      <div class="portfolio-overlay"><h4>Collaboration Drop</h4><span>BlamBlack</span></div>
+    </div>
+    <div class="portfolio-item" data-brand="blamblack">
+      <img loading="lazy" src="https://lh3.googleusercontent.com/d/1gZ3xs-UqXDPlIvkL6SCLNehHmteAj4bq" alt="BlamBlack Lifestyle">
+      <div class="portfolio-overlay"><h4>Lifestyle Campaign</h4><span>BlamBlack</span></div>
+    </div>
+    <div class="portfolio-item" data-brand="blamblack">
+      <img loading="lazy" src="https://lh3.googleusercontent.com/d/1Ej5KkAHEJC150MZj235wMPsbE9p80Dyu" alt="BlamBlack Brand">
+      <div class="portfolio-overlay"><h4>Brand Identity Shoot</h4><span>BlamBlack</span></div>
+    </div>
+    <div class="portfolio-item" data-brand="blamblack">
+      <img loading="lazy" src="https://lh3.googleusercontent.com/d/1BrZqb4yBhFbTfyCyVwNmoGGpMEeYvSlV" alt="BlamBlack Exclusive">
+      <div class="portfolio-overlay"><h4>Exclusive Release</h4><span>BlamBlack</span></div>
+    </div>
+    <div class="portfolio-item" data-brand="blamblack">
+      <img loading="lazy" src="https://lh3.googleusercontent.com/d/189i3lVWYj_kttGHy1CAdU57yjtBFCQvB" alt="BlamBlack Latest">
+      <div class="portfolio-overlay"><h4>Latest Collection</h4><span>BlamBlack</span></div>
+    </div>
+
+    <!-- Rare Heritage (9 images) -->
+    <div class="portfolio-item" data-brand="rare">
+      <img loading="lazy" src="https://lh3.googleusercontent.com/d/17hSwSJDvbL5eySVGjbCHTZ1uqLYadC23" alt="Rare Heritage Collection">
+      <div class="portfolio-overlay"><h4>High Couture Collection</h4><span>Rare Heritage</span></div>
+    </div>
+    <div class="portfolio-item" data-brand="rare">
+      <img loading="lazy" src="https://lh3.googleusercontent.com/d/15Qc-HU0U0LduAgD2rRNnSZ8Rv5UPlnlt" alt="Rare Heritage Design">
+      <div class="portfolio-overlay"><h4>Couture Design</h4><span>Rare Heritage</span></div>
+    </div>
+    <div class="portfolio-item" data-brand="rare">
+      <img loading="lazy" src="https://lh3.googleusercontent.com/d/1aaJtsLteOmCt_sRTy-AITRQK4cLHynKz" alt="Rare Heritage Styling">
+      <div class="portfolio-overlay"><h4>Editorial Styling</h4><span>Rare Heritage</span></div>
+    </div>
+    <div class="portfolio-item" data-brand="rare">
+      <img loading="lazy" src="https://lh3.googleusercontent.com/d/1t_NOK9GkpCq2UNtputoL4bPY3e-Wz2T3" alt="Rare Heritage Bridal">
+      <div class="portfolio-overlay"><h4>Bridal Couture</h4><span>Rare Heritage</span></div>
+    </div>
+    <div class="portfolio-item" data-brand="rare">
+      <img loading="lazy" src="https://lh3.googleusercontent.com/d/1HiuhruMOjvnH5hXz0VyRqc74pSxT-qmY" alt="Rare Heritage Campaign">
+      <div class="portfolio-overlay"><h4>Brand Campaign</h4><span>Rare Heritage</span></div>
+    </div>
+    <div class="portfolio-item" data-brand="rare">
+      <img loading="lazy" src="https://lh3.googleusercontent.com/d/15fu_uImUK3S9YXpbWbt6Oj-xyhjm7WiT" alt="Rare Heritage Shoot">
+      <div class="portfolio-overlay"><h4>Celebrity Shoot</h4><span>Rare Heritage</span></div>
+    </div>
+    <div class="portfolio-item" data-brand="rare">
+      <img loading="lazy" src="https://lh3.googleusercontent.com/d/1AC2uz-L1Uvke-nZzTuEqzXXar6Wc8vN_" alt="Rare Heritage Look">
+      <div class="portfolio-overlay"><h4>Lookbook</h4><span>Rare Heritage</span></div>
+    </div>
+    <div class="portfolio-item" data-brand="rare">
+      <img loading="lazy" src="https://lh3.googleusercontent.com/d/1_PwH-BtpGGztaPTzjaT0-7Dytyovczz_" alt="Rare Heritage Ensemble">
+      <div class="portfolio-overlay"><h4>Ensemble Collection</h4><span>Rare Heritage</span></div>
+    </div>
+    <div class="portfolio-item" data-brand="rare">
+      <img loading="lazy" src="https://lh3.googleusercontent.com/d/1pb_kR2tuTcLwyQiBAa_1Hky_DFx-Ohfo" alt="Rare Heritage Heritage">
+      <div class="portfolio-overlay"><h4>Heritage Collection</h4><span>Rare Heritage</span></div>
+    </div>
+    <div class="portfolio-item" data-brand="rare">
+      <img loading="lazy" src="https://lh3.googleusercontent.com/d/1PTLPPorPyhVnTghwCkCpGpqwtxdCRspz" alt="Rare Heritage Piece">
+      <div class="portfolio-overlay"><h4>Couture Piece</h4><span>Rare Heritage</span></div>
+    </div>
+    <div class="portfolio-item" data-brand="rare">
+      <img loading="lazy" src="https://lh3.googleusercontent.com/d/19iIpl1_lUxecZ2Aa9Ap1-B4awo7FRO-k" alt="Rare Heritage Fashion">
+      <div class="portfolio-overlay"><h4>Runway Look</h4><span>Rare Heritage</span></div>
+    </div>
+    <div class="portfolio-item" data-brand="rare">
+      <img loading="lazy" src="https://lh3.googleusercontent.com/d/1VisuIfOhsUxp6g6kP--DZw1_i8I_IBOh" alt="Rare Heritage Style">
+      <div class="portfolio-overlay"><h4>Artisan Styling</h4><span>Rare Heritage</span></div>
+    </div>
+    <div class="portfolio-item" data-brand="rare">
+      <img loading="lazy" src="https://lh3.googleusercontent.com/d/1J7yOZNR85QsKPoZuqhcq1cCaIUVzgDMX" alt="Rare Heritage Craft">
+      <div class="portfolio-overlay"><h4>Handcrafted Edit</h4><span>Rare Heritage</span></div>
+    </div>
+    <div class="portfolio-item" data-brand="rare">
+      <img loading="lazy" src="https://lh3.googleusercontent.com/d/1ax8YGZWWnRlRvNvAyyyVzeewXcwQcLvs" alt="Rare Heritage Exclusive">
+      <div class="portfolio-overlay"><h4>Exclusive Collection</h4><span>Rare Heritage</span></div>
+    </div>
+
+    <!-- Bailgaadi India (7 images) -->
+    <div class="portfolio-item" data-brand="bailgaadi">
+      <img loading="lazy" src="https://lh3.googleusercontent.com/d/1tleh99FkcyPUN7vQoDlAoko87in4qV7k" alt="Bailgaadi Design">
+      <div class="portfolio-overlay"><h4>Menswear Design</h4><span>Bailgaadi India</span></div>
+    </div>
+    <div class="portfolio-item" data-brand="bailgaadi">
+      <img loading="lazy" src="https://lh3.googleusercontent.com/d/1D5Vigj9uk08SyAnj9RpPfMgSK7I-RlOf" alt="Bailgaadi Collection">
+      <div class="portfolio-overlay"><h4>Groom Wear Collection</h4><span>Bailgaadi India</span></div>
+    </div>
+    <div class="portfolio-item" data-brand="bailgaadi">
+      <img loading="lazy" src="https://lh3.googleusercontent.com/d/1abIeduSeZh-q91Nl6WHRnWZ4f_C_S6yq" alt="Bailgaadi Ethnic">
+      <div class="portfolio-overlay"><h4>Traditional Ethnic Wear</h4><span>Bailgaadi India</span></div>
+    </div>
+    <div class="portfolio-item" data-brand="bailgaadi">
+      <img loading="lazy" src="https://lh3.googleusercontent.com/d/1sV9DoLqgq6l5SO7zJbdahuaXHl8lZvyy" alt="Bailgaadi Formal">
+      <div class="portfolio-overlay"><h4>Formal Collection</h4><span>Bailgaadi India</span></div>
+    </div>
+    <div class="portfolio-item" data-brand="bailgaadi">
+      <img loading="lazy" src="https://lh3.googleusercontent.com/d/1XLis0ctK2oZalSEbjXTCB4ZAvc78fxJm" alt="Bailgaadi Styling">
+      <div class="portfolio-overlay"><h4>Celebrity Styling</h4><span>Bailgaadi India</span></div>
+    </div>
+    <div class="portfolio-item" data-brand="bailgaadi">
+      <img loading="lazy" src="https://lh3.googleusercontent.com/d/1wwTOE-Swpw3d4AIgF6_zZx0tLCWG0KOC" alt="Bailgaadi Campaign">
+      <div class="portfolio-overlay"><h4>Brand Campaign</h4><span>Bailgaadi India</span></div>
+    </div>
+    <div class="portfolio-item" data-brand="bailgaadi">
+      <img loading="lazy" src="https://lh3.googleusercontent.com/d/1cUnK2uoxY4F0YwkdYdwGtH2X-YBxvjif" alt="Bailgaadi Editorial">
+      <div class="portfolio-overlay"><h4>Editorial Shoot</h4><span>Bailgaadi India</span></div>
+    </div>
+
+    <!-- Vaishali's (3 images) -->
+    <div class="portfolio-item" data-brand="vaishaali">
+      <img loading="lazy" src="https://lh3.googleusercontent.com/d/1jsJuJl5PCUywjQRzR4iZK7Q8VqK9OKVs" alt="Vaishali's Handloom">
+      <div class="portfolio-overlay"><h4>Handloom Collection</h4><span>Vaishali's</span></div>
+    </div>
+    <div class="portfolio-item" data-brand="vaishaali">
+      <img loading="lazy" src="https://lh3.googleusercontent.com/d/1HxO4AjudNQ3XvZVVBYhO8Af9Df-IaVsK" alt="Vaishali's Cotton">
+      <div class="portfolio-overlay"><h4>Cotton Weave Edit</h4><span>Vaishali's</span></div>
+    </div>
+    <div class="portfolio-item" data-brand="vaishaali">
+      <img loading="lazy" src="https://lh3.googleusercontent.com/d/1AQh10SVeh1RGD5yO1H0-tLKWeO59ygJq" alt="Vaishali's Design">
+      <div class="portfolio-overlay"><h4>Artisan Design</h4><span>Vaishali's</span></div>
+    </div>
+    <div class="portfolio-item portfolio-video" data-brand="vaishaali">
+      <iframe loading="lazy" src="https://drive.google.com/file/d/1RD_lRqboLCXNeVi7CqG6JafTRqOJWWqv/preview" allow="autoplay" frameborder="0" allowfullscreen></iframe>
+      <div class="portfolio-overlay video-overlay"><h4>Behind the Scenes</h4><span>Vaishali's - Video</span></div>
+    </div>
+    <div class="portfolio-item portfolio-video" data-brand="vaishaali">
+      <iframe loading="lazy" src="https://drive.google.com/file/d/1tyqWVFnkwno8jaQhsApO33X2y7P6M090/preview" allow="autoplay" frameborder="0" allowfullscreen></iframe>
+      <div class="portfolio-overlay video-overlay"><h4>Collection Preview</h4><span>Vaishali's - Video</span></div>
+    </div>
+    <div class="portfolio-item portfolio-video" data-brand="vaishaali">
+      <iframe loading="lazy" src="https://drive.google.com/file/d/1JLyIVaf2dBqKCzBgUJ1yNi2GCRZOm2x1/preview" allow="autoplay" frameborder="0" allowfullscreen></iframe>
+      <div class="portfolio-overlay video-overlay"><h4>Runway Reel</h4><span>Vaishali's - Video</span></div>
+    </div>
+    <div class="portfolio-item portfolio-video" data-brand="vaishaali">
+      <iframe loading="lazy" src="https://drive.google.com/file/d/18mERBybv4iqk9-wgR4mK0U6YctM0GB1A/preview" allow="autoplay" frameborder="0" allowfullscreen></iframe>
+      <div class="portfolio-overlay video-overlay"><h4>Studio Session</h4><span>Vaishali's - Video</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section class="experience" id="experience">
+  <p class="section-label">Journey</p>
+  <h2 class="section-title">Professional Experience</h2>
+  <div class="section-line"></div>
+  <div class="timeline">
+
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-date">2023</div>
+      <div class="timeline-company">Vaishali's (Handloom & Cotton)</div>
+      <div class="timeline-role">Business Development Head</div>
+      <ul class="timeline-bullets">
+        <li>Led business development for a premium handloom and cotton fashion brand</li>
+        <li>Managed retail store operations at Kalaghoda, Mumbai and organized fashion shows</li>
+        <li>Oversaw upgrade and customization of collections; represented brand at Paris Fashion Week</li>
+        <li>Grew India business to 3,000+ clients</li>
+      </ul>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-date">May 2019 - June 2022</div>
+      <div class="timeline-company">BlamBlack (D2C Brand)</div>
+      <div class="timeline-role">Co-Founder</div>
+      <ul class="timeline-bullets">
+        <li>Co-founded and built a Direct-to-Consumer fashion brand from scratch during Covid-19</li>
+        <li>Developed complete brand identity including logo, office space, tagline, and brand language</li>
+        <li>Built and led a core team from the ground up; set up manufacturing/factory operations</li>
+        <li>Expanded sales through Myntra and Flipkart; marketing via influencer collabs and TV/OTT (Bigg Boss)</li>
+      </ul>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-date">Nov 2018 - Apr 2019</div>
+      <div class="timeline-company">Ogaan India Pvt. Ltd.</div>
+      <div class="timeline-role">Fashion Consultant & Visual Merchandiser</div>
+      <ul class="timeline-bullets">
+        <li>Managed a multi-designer retail store, overseeing daily operations and sales performance</li>
+        <li>Handled store visual merchandising including facade and in-store display</li>
+        <li>Delivered personalized client servicing for high-end and NRI customers including HNIs</li>
+        <li>Led launch of new collections, created catalogs and lookbooks</li>
+      </ul>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-date">May 2018 - Jan 2019</div>
+      <div class="timeline-company">Bailgaadi India</div>
+      <div class="timeline-role">Designer & Marketing/Sales Coordinator</div>
+      <ul class="timeline-bullets">
+        <li>Specialized in the design of menswear, formal groom wear, and traditional ethnic wear</li>
+        <li>Styled for 'Razeen' (Mister India) and led styling projects for T-Series music videos</li>
+      </ul>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-date">Jan 2017 - May 2018</div>
+      <div class="timeline-company">Rare Heritage</div>
+      <div class="timeline-role">Head In-House Designer</div>
+      <ul class="timeline-bullets">
+        <li>Led the design of high-couture garments and managed marketing and sales coordination</li>
+        <li>Executed brand shoots with Chitrangada Singh and Ankita Shorey (Miss India 2011)</li>
+        <li>Managed brand presence at Vogue Wedding Show, Vivaah, and IIGW</li>
+      </ul>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-date">Apr 2015 - Dec 2016</div>
+      <div class="timeline-company">Freelance Designer / Stylist</div>
+      <div class="timeline-role">Project Management</div>
+      <ul class="timeline-bullets">
+        <li>Executed custom design projects and professional styling for photographers</li>
+        <li>Operated a design store in Lokhandwala, creating custom designs for clients</li>
+        <li>Successfully completed styling for a Bollywood movie project and multiple shoots</li>
+      </ul>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-date">July 2013 - Apr 2015</div>
+      <div class="timeline-company">Fashion 205</div>
+      <div class="timeline-role">Head Designer & Sales Coordinator</div>
+      <ul class="timeline-bullets">
+        <li>Directed the full design cycle for Indian, Bridal, and Indo-Western apparel</li>
+        <li>Conducted fashion forecasting, color palette research, and fabric sourcing</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section class="skills" id="skills">
+  <div style="text-align:center;">
+    <p class="section-label">Expertise</p>
+    <h2 class="section-title">Core Competencies</h2>
+    <div class="section-line" style="margin: 0 auto 3rem;"></div>
+  </div>
+  <div class="skills-grid">
+    <div class="skill-card">
+      <div class="skill-icon">&#9670;</div>
+      <h4>Design & Styling</h4>
+      <p>Indian Ethnic, Bridal, Western Couture, Menswear, Groom Wear, Celebrity Styling</p>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">&#9670;</div>
+      <h4>Operations</h4>
+      <p>Visual Merchandising, Inventory Management, Stock Replenishment, CRM</p>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">&#9670;</div>
+      <h4>Business</h4>
+      <p>Sales Coordination, Market Research, Fabric Sourcing, Price Negotiation, D2C Brand Building</p>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">&#9670;</div>
+      <h4>Technical</h4>
+      <p>Adobe Photoshop, Corel Draw, Fashion Forecasting, Catalog & Lookbook Design</p>
+    </div>
+  </div>
+</section>
+
+<!-- HIGHLIGHTS -->
+<section class="highlights">
+  <div style="text-align:center;">
+    <p class="section-label">Milestones</p>
+    <h2 class="section-title">Key Highlights</h2>
+    <div class="section-line" style="margin: 0 auto 3rem;"></div>
+  </div>
+  <div class="highlights-grid">
+    <div class="highlight-card">
+      <div class="highlight-icon">&#127909;</div>
+      <h4>Bollywood Styling</h4>
+      <p>Styling and design for a Bollywood movie project and T-Series music videos</p>
+    </div>
+    <div class="highlight-card">
+      <div class="highlight-icon">&#127942;</div>
+      <h4>Paris Fashion Week</h4>
+      <p>Represented Vaishali's brand at Paris Fashion Week 2023</p>
+    </div>
+    <div class="highlight-card">
+      <div class="highlight-icon">&#11088;</div>
+      <h4>Celebrity Portfolio</h4>
+      <p>Chitrangada Singh, Ankita Shorey (Miss India 2011), Razeen (Mr. India), T-Series</p>
+    </div>
+    <div class="highlight-card">
+      <div class="highlight-icon">&#127941;</div>
+      <h4>Staedtler Award</h4>
+      <p>2nd Prize - Illustration / Photo Contest, 2013</p>
+    </div>
+    <div class="highlight-card">
+      <div class="highlight-icon">&#128250;</div>
+      <h4>TV / OTT Visibility</h4>
+      <p>BlamBlack brand featured on Bigg Boss and other TV/OTT platforms</p>
+    </div>
+    <div class="highlight-card">
+      <div class="highlight-icon">&#127981;</div>
+      <h4>Elite Exhibitions</h4>
+      <p>Vogue Wedding Show, Vivaah, and India International Jewellery Week</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <p class="section-label">Get in Touch</p>
+  <h2 class="contact-title">Let's Create<br>Something Beautiful</h2>
+  <p class="contact-subtitle">Available for collaborations, styling projects, brand consulting, and design partnerships</p>
+  <div class="contact-details">
+    <div class="contact-item">
+      <label>Email</label>
+      <a href="mailto:pujasingh02018@gmail.com">pujasingh02018@gmail.com</a>
+    </div>
+    <div class="contact-item">
+      <label>Phone</label>
+      <a href="tel:+916350515708">+91 63505 15708</a>
+    </div>
+    <div class="contact-item">
+      <label>Location</label>
+      <span>Borivali East, Mumbai 400066</span>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  &copy; 2026 Puja Vyas. All Rights Reserved.
+</footer>
+
+<script>
+// Loader
+window.addEventListener('load', () => {
+  setTimeout(() => document.querySelector('.loader').classList.add('hidden'), 1500);
+});
+
+// Navbar scroll effect
+window.addEventListener('scroll', () => {
+  document.querySelector('nav').classList.toggle('scrolled', window.scrollY > 50);
+});
+
+// Portfolio filter
+function filterPortfolio(brand, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.portfolio-item').forEach(item => {
+    if (brand === 'all' || item.dataset.brand === brand) {
+      item.style.display = 'block';
+      item.style.animation = 'fadeUp 0.5s forwards';
+    } else {
+      item.style.display = 'none';
+    }
+  });
+}
+
+// Intersection Observer for scroll animations
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.style.opacity = '1';
+      entry.target.style.transform = 'translateY(0)';
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('section').forEach(sec => {
+  sec.style.opacity = '0';
+  sec.style.transform = 'translateY(40px)';
+  sec.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+  observer.observe(sec);
+});
+</script>
+</body>
+</html>
